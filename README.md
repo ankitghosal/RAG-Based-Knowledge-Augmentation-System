@@ -1,32 +1,87 @@
-# 🌟RAG using Llama3, Langchain and ChromaDB💎
-RAG using Llama3, Langchain and ChromaDB
+# 🌟RAG Based Knowledge Augmentation System 💎
+### using Llama3, Langchain and ChromaDB
+## Project Objective
 
-## Objective 🎯
+In this notebook, we build a **Retrieval Augmented Generation (RAG)** system using **Llama 3**, **LangChain**, and **ChromaDB**. The goal is to enable question-answering over external documents (not part of the model’s training data) without fine-tuning the Large Language Model (LLM).
 
-This project utilizes Llama3 Langchain and ChromaDB to establish a Retrieval Augmented Generation (RAG) system. This system empowers you to ask questions about your documents, even if the information wasn't included in the training data for the Large Language Model (LLM). Retrieval Augmented Generation works by first performing a retrieval step when presented with a question. This step fetches relevant documents from a special vector database, where the documents have been indexed.
+The system follows a two-step process:
 
-### Definitions 📝
+1. **Retrieval** – relevant document chunks are fetched from a vector database.
+2. **Generation** – the LLM uses the retrieved context to produce accurate answers.
 
-* **LLM:** Large Language Model
-* **Llama3:** LLM developed by Meta
-* **Langchain:** Framework designed to streamline the creation of applications utilizing LLMs
-* **Vector database:** Database that organizes data using high-dimensional vectors
-* **ChromaDB:** Vector database
-* **RAG:** Retrieval Augmented Generation (see below for more details)
+This implementation uses a real-world dataset (EU AI Act 2023) to demonstrate how RAG improves factual correctness and reduces hallucinations.
 
-### Model Details 🌟
+---
 
-* **Model:** Llama 3
-* **Variation:** 8b-chat-hf (8b: 8 Billion parameters; hf: HuggingFace)
-* **Version:** V1
-* **Framework:** Transformers
+## Definitions
 
-The pre-trained Llama3 model is fine-tuned with over 15 Trillion tokens and boasts 8 to 70 Billion parameters, making it one of the most powerful open-source models available. It offers significant advancements over the previous Llama2 model.
+* **LLM (Large Language Model)** – A deep learning model trained on large text corpora for NLP tasks
+* **Llama 3** – Open-source LLM by Meta, used here via HuggingFace Transformers
+* **LangChain** – Framework for building LLM-powered applications with chaining and orchestration
+* **Vector Database** – Stores high-dimensional embeddings for semantic search
+* **ChromaDB** – Lightweight, persistent vector database used for document retrieval
+* **Embeddings** – Numerical vector representations of text generated using Sentence Transformers
+* **RAG (Retrieval Augmented Generation)** – Combines retrieval systems with LLMs for grounded responses
 
+---
 
-## Conclusions 💯🔥
+## Model Details
 
-This project successfully implemented a Retrieval Augmented Generation (RAG) solution by leveraging Langchain, ChromaDB, and Llama3 as the LLM. To evaluate the system's performance, we utilized the EU AI Act from 2023. The results demonstrated that the RAG model delivers accurate answers to questions posed about the Act.
+* **Model**: Llama 3
+* **Variant**: 8B Chat (HuggingFace format)
+* **Framework**: Transformers
+* **Optimization**: Quantization using `bitsandbytes` for efficient inference
+
+The model is integrated via a HuggingFace pipeline and used as the **generator** in the RAG system.
+
+---
+
+## System Architecture
+
+The RAG pipeline in this notebook consists of:
+
+### 1. Document Processing
+
+* Source: **EU AI Act (2023)**
+* Documents are split into smaller chunks for efficient retrieval
+
+### 2. Embedding Generation
+
+* Uses **Sentence Transformers / HuggingFace embeddings**
+* Converts text chunks into vector representations
+
+### 3. Vector Storage
+
+* Stored in **ChromaDB** with persistence enabled
+* Enables fast semantic similarity search
+
+### 4. Retrieval + Generation
+
+* LangChain connects the retriever and LLM
+* Relevant chunks are retrieved and passed to Llama 3 for answer generation
+
+---
+
+## What is a Retrieval Augmented Generation (RAG) System?
+
+Large Language Models are powerful but limited to their training data and may hallucinate when handling unseen information.
+
+RAG solves this by integrating external knowledge sources:
+
+* **Retriever**: Finds relevant document chunks using embeddings and vector similarity
+* **Generator**: Produces answers grounded in retrieved context
+
+This approach ensures:
+
+* More accurate answers
+* Reduced hallucination
+* Up-to-date and domain-specific knowledge integration
+
+---
+
+## Conclusion 
+
+In this notebook, we demonstrate how combining **LangChain, ChromaDB, and Llama 3** creates an effective RAG system capable of answering questions about the EU AI Act with improved reliability. Future improvements can focus on better embeddings, chunking strategies, and advanced retrieval techniques.
 
 **Future Work** ⚡✨
 
